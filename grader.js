@@ -23,66 +23,71 @@ References:
 
 'use strict';
 
-var fs = require('fs');
-var rest = require('restler');
-var program = require('commander');
-var cheerio = require('cheerio');
-var HTMLFILE_DEFAULT = 'index.html';
-var CHECKSFILE_DEFAULT = 'checks.json';
+var fs = require('fs'),
+    rest = require('restler'),
+    program = require('commander'),
+    cheerio = require('cheerio');
 
-var assertFileExists = function(infile) {
-    var instr = infile.toString();
-    if(!fs.existsSync(instr)) {
-        console.log('%s does not exist. Exiting.', instr);
+var DEFAULTS = {
+        html  : 'index.html',
+        checks: 'checks.json'
+    };
+
+var assertFileExists = function (file) {
+    file = file.toString();
+    if (!fs.existsSync(file)) {
+        console.log('%s does not exist. Exiting.', file);
         process.exit(1); // http://nodejs.org/api/process.html#process_process_exit_code
     }
-    return instr;
+    return file;
 };
 
-var cheerioHtmlFile = function(htmlfile) {
-    return cheerio.load(fs.readFileSync(htmlfile));
+var cheerioHtmlFile = function (html) {
+    return cheerio.load(fs.readFileSync(html));
 };
 
-var loadChecks = function(checksfile) {
+var loadChecks = function (checksfile) {
     return JSON.parse(fs.readFileSync(checksfile));
 };
 
-var checkHtmlFile = function(htmlfile, checksfile) {
-    var $ = cheerioHtmlFile(htmlfile);
-    var checks = loadChecks(checksfile).sort();
-    var out = {};
-    for(var ii in checks) {
-        var present = $(checks[ii]).length > 0;
-        out[checks[ii]] = present;
+var checkHtmlFile = function (htmlfile, checksfile) {
+    var $ = cheerioHtmlFile(htmlfile),
+        checks = loadChecks(checksfile).sort(),
+        out = {},
+        key, present;
+
+    for (key in checks) {
+        present = $(checks[key]).length > 0;
+        out[checks[key]] = present;
     }
+
     return out;
 };
 
-var clone = function(fn) {
+var clone = function (fn) {
     // Workaround for commander.js issue.
     // http://stackoverflow.com/a/6772648
     return fn.bind({});
 };
 
+// TODO still sort of yuck
 if (require.main === module) {
     program
-        .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
-        .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
-        .option('-u, --url <html_file>','Url path')
+        .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), DEFAULTS.checks)
+        .option('-f, --file <html_file>',    'Path to index.html',  clone(assertFileExists), DEFAULTS.html)
+        .option('-u, --url <html_file>',     'Url path')
         .parse(process.argv);
 
     if (program.url) {
-        var htmlfile = 'index.html';
         rest.get(program.url).on('complete', function (result) {
-            fs.writeFileSync(htmlfile, result);
+            fs.writeFileSync(DEFAULTS.html, result);
+            console.log(checkHtmlFile(DEFAULTS.html, program.checks));
         });
-        var checkJson = checkHtmlFile(htmlfile, program.checks);
     }
     else {
-        var checkJson = checkHtmlFile(program.file, program.checks);
+        console.log(checkHtmlFile(program.file, program.checks));
     }
-    var outJson = JSON.stringify(checkJson, null, 4);
-    console.log(outJson);
-} else {
+}
+else {
     exports.checkHtmlFile = checkHtmlFile;
 }
