@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
 
   <style>
+    /* Breakpoints */
+
     /* Large desktop */
     @media (min-width: 980px) {
       body {
@@ -27,37 +29,75 @@
     }
 
     /* Landscape phones/tablets */
+    @media (max-width: 480px) {
+      .copy {
+        padding: 2.5% 10%;
+      }
+      .linediv-l {
+        border-right: 1px solid #fff
+      }
+      .linediv-r {
+        border-left: 1px solid #fff;
+      }
+    }
 
+
+    /* All form factors */
+
+    /* Common elements */
     body {
       font-family: 'Open Sans', sans-serif;
+    }
+    .heading, .subheading {
       font-family: 'Ubuntu', sans-serif;
-      padding: 20px 0 40px;
-    }
-    .container {
-      width: 960px;
-    }
-    p.lead {
-      padding-top: 15px;
-    }
-    .navigation, .pitch, .section1, .section2, .faq, .footer {
-      padding: 10px 0 10px;
-    }
-    .video, .thermometer, .order, .social {
-      border: 1px dotted;
       text-align: center;
     }
-    .video {
-      /* internal borders have 1px width, thus need to add 4 x 1px to 120px. */
-      height: 124px;
-      line-height: 124px;
+    p.lead {
+      font-size: 24px;
+      line-height: 1.25;
+      padding-top: 1.5%;
     }
-    .thermometer, .order, .social {
-      /* line-height to vertically center: http://phrogz.net/css/vertical-align/index.html */
-      height: 40px;
-      line-height: 40px;
+    p {
+      font-size: 18px;
+      line-height: 1.33;
     }
-    div.row {
-      border: 1px solid;
+
+    /* Video pitch and action */
+    .pitch {
+      padding: 2.5% 0;
+    }
+    .order {
+      padding: 2% 0;
+    }
+    .actions {
+      background-color: #343434;
+      padding: 3% 0;
+    }
+    .video, .thermometer, .order, .social, .statistics {
+      text-align: center;
+    }
+    .statistics h3, .statistics p {
+      color: #fff;
+    }
+
+    /* Marketing copy and footer */
+    .copy {
+      padding-top: 2.5%;
+      padding-bottom: 2.5%;
+      text-align: justify;
+    }
+    .asset {
+      padding: 2.5% 0;
+    }
+    .footer {
+      color: #ccc;
+      text-align: center;
+    }
+    .footer p {
+      font-size: 14px;
+    }
+    .footer a {
+      color: #ccccff;
     }
   </style>
 </head>
