@@ -1,0 +1,91 @@
+/* Breakpoints */
+
+/* Large desktop */
+@media (min-width: 980px) {
+  body {
+    padding-top: 60px;
+  }
+  .linediv-l {
+    border-right: 1px solid #fff
+  }
+  .linediv-r {
+    border-left: 1px solid #fff;
+  }
+}
+
+/* Landscape phones/tablets */
+@media (max-width: 480px) {
+  .copy {
+    padding: 2.5% 10%;
+  }
+  .linediv-l {
+    border-right: 1px solid #fff
+  }
+  .linediv-r {
+    border-left: 1px solid #fff;
+  }
+}
+
+
+/* All form factors */
+
+/* Common elements */
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+.heading,
+.subheading {
+  font-family: 'Ubuntu', sans-serif;
+  text-align: center;
+}
+.lead {
+  font-size: 24px;
+  line-height: 1.25;
+  padding-top: 1.5%;
+}
+p {
+  font-size: 18px;
+  line-height: 1.33;
+}
+
+/* Video pitch and action */
+.pitch {
+  padding: 2.5% 0;
+}
+.order {
+  padding: 2% 0;
+}
+.actions {
+  background-color: #343434;
+  padding: 3% 0;
+}
+.video,
+.thermometer,
+.order,
+.social,
+.statistics {
+  text-align: center;
+}
+.statistics {
+  color: #fff;
+}
+
+/* Marketing copy and footer */
+.copy {
+  padding-top: 2.5%;
+  padding-bottom: 2.5%;
+  text-align: justify;
+}
+.asset {
+  padding: 2.5% 0;
+}
+.footer {
+  color: #ccc;
+  text-align: center;
+}
+.footer p {
+  font-size: 14px;
+}
+.footer a {
+  color: #ccccff;
+}
